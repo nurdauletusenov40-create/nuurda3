@@ -1,0 +1,11 @@
+@model Department
+@{
+    ViewData["Title"] = "Кафедраны жою";
+    ViewData["Section"] = "КАФЕДРАЛАР";
+}
+<div class="page-heading"><div><span class="eyebrow dark-eyebrow">ЖОЮДЫ РАСТАУ</span><h1>Кафедраны жою</h1><p>Бұл әрекетті қайтару мүмкін емес.</p></div></div>
+<section class="content-panel form-panel">
+    <div class="delete-warning">Назар аударыңыз: кафедраны жойған кезде оған бекітілген @Model.Teachers.Count оқытушы да дерекқордан бірге жойылады.</div>
+    <div class="detail-item"><label>Кафедра атауы</label><strong>@Model.Name</strong></div>
+    <form asp-action="Delete" method="post" class="form-actions"><input type="hidden" asp-for="Id" /><button type="submit" class="btn btn-danger btn-sm">Кафедраны және құрамын жою</button><a asp-action="Index" class="btn btn-outline-app">Болдырмау</a></form>
+</section>

@@ -1,0 +1,32 @@
+@model IEnumerable<Department>
+@{
+    ViewData["Title"] = "Кафедралар";
+    ViewData["Section"] = "КАФЕДРАЛАР";
+}
+<div class="page-heading">
+    <div><span class="eyebrow dark-eyebrow">АКАДЕМИЯЛЫҚ ҚҰРЫЛЫМ</span><h1>Кафедралар</h1><p>Университеттің құрылымдық бөлімдерін басқару.</p></div>
+    <a class="btn btn-primary-app" asp-action="Create">＋ Кафедра қосу</a>
+</div>
+<section class="content-panel">
+    <div class="table-responsive">
+        <table class="table data-table align-middle">
+            <thead><tr><th>КАФЕДРА</th><th>ОРНАЛАСҚАН ЖЕРІ</th><th>ОҚЫТУШЫЛАР</th><th>ҚҰРЫЛҒАН КҮНІ</th><th></th></tr></thead>
+            <tbody>
+            @foreach (var department in Model)
+            {
+                <tr>
+                    <td><span class="row-title">@department.Name</span><span class="row-subtitle">@(string.IsNullOrWhiteSpace(department.Description) ? "Сипаттама берілмеген" : department.Description)</span></td>
+                    <td>@(department.OfficeLocation ?? "—")</td>
+                    <td><span class="badge-soft">@department.Teachers.Count оқытушы</span></td>
+                    <td>@department.CreatedAt.ToLocalTime().ToString("dd.MM.yyyy")</td>
+                    <td><div class="action-links"><a asp-action="Details" asp-route-id="@department.Id">Ашу</a><a asp-action="Edit" asp-route-id="@department.Id">Өңдеу</a><a class="danger-link" asp-action="Delete" asp-route-id="@department.Id">Жою</a></div></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        @if (!Model.Any())
+        {
+            <div class="empty-state">Кафедралар әзірге жоқ. Бірінші кафедраны қосыңыз.</div>
+        }
+    </div>
+</section>

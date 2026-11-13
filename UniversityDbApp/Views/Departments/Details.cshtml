@@ -1,0 +1,31 @@
+@model Department
+@{
+    ViewData["Title"] = "Кафедра мәліметі";
+    ViewData["Section"] = "КАФЕДРАЛАР";
+}
+<div class="page-heading"><div><span class="eyebrow dark-eyebrow">ҚҰРЫЛЫМДЫҚ БӨЛІМ</span><h1>@Model.Name</h1><p>Кафедра ақпараты және оған бекітілген оқытушылар.</p></div><div class="heading-actions"><a class="btn btn-outline-app" asp-action="Index">← Тізімге қайту</a><a class="btn btn-primary-app" asp-action="Edit" asp-route-id="@Model.Id">Өңдеу</a></div></div>
+<section class="content-panel">
+    <div class="detail-grid">
+        <div class="detail-item"><label>Кафедра атауы</label><strong>@Model.Name</strong></div>
+        <div class="detail-item"><label>Орналасқан жері</label><strong>@(Model.OfficeLocation ?? "Көрсетілмеген")</strong></div>
+        <div class="detail-item"><label>Құрылған күні</label><strong>@Model.CreatedAt.ToLocalTime().ToString("dd MMMM yyyy")</strong></div>
+        <div class="detail-item"><label>Оқытушылар саны</label><strong>@Model.Teachers.Count</strong></div>
+        <div class="detail-item detail-wide"><label>Сипаттамасы</label><strong>@(Model.Description ?? "Сипаттама берілмеген")</strong></div>
+    </div>
+</section>
+<section class="content-panel detail-teachers-panel">
+    <div class="panel-heading"><div><span class="eyebrow dark-eyebrow">КАФЕДРА ҚҰРАМЫ</span><h2>Оқытушылар</h2></div><a class="btn btn-primary-app" asp-controller="Teachers" asp-action="Create">＋ Оқытушы қосу</a></div>
+    @if (Model.Teachers.Count == 0)
+    {
+        <div class="empty-state">Бұл кафедрада оқытушылар әлі тіркелмеген.</div>
+    }
+    else
+    {
+        <div class="table-responsive"><table class="table data-table"><thead><tr><th>АТЫ-ЖӨНІ</th><th>ЭЛЕКТРОНДЫҚ ПОШТА</th><th>ПӘНІ</th><th>ЕҢБЕК ӨТІЛІ</th></tr></thead><tbody>
+        @foreach (var teacher in Model.Teachers.OrderBy(item => item.FullName))
+        {
+            <tr><td><a class="row-title" asp-controller="Teachers" asp-action="Details" asp-route-id="@teacher.Id">@teacher.FullName</a></td><td>@teacher.Email</td><td>@teacher.Subject</td><td>@teacher.ExperienceYears жыл</td></tr>
+        }
+        </tbody></table></div>
+    }
+</section>

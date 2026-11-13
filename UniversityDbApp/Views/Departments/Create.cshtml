@@ -1,0 +1,8 @@
+@model Department
+@{
+    ViewData["Title"] = "Кафедра қосу";
+    ViewData["Section"] = "КАФЕДРАЛАР";
+    ViewData["FormAction"] = "Create";
+}
+<div class="page-heading"><div><span class="eyebrow dark-eyebrow">ЖАҢА ЖАЗБА</span><h1>Кафедра қосу</h1><p>Кафедра туралы негізгі мәліметтерді толтырыңыз.</p></div></div>
+<section class="content-panel form-panel"><partial name="_Form" model="Model" /></section>

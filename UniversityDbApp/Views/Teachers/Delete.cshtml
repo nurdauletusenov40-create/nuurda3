@@ -1,0 +1,16 @@
+@model Teacher
+@{
+    ViewData["Title"] = "Оқытушыны жою";
+    ViewData["Section"] = "ОҚЫТУШЫЛАР";
+}
+<div class="page-heading"><div><span class="eyebrow dark-eyebrow">ЖОЮДЫ РАСТАУ</span><h1>Оқытушыны жою</h1><p>Бұл әрекетті қайтару мүмкін емес.</p></div></div>
+<section class="content-panel form-panel">
+    <div class="delete-warning">Осы оқытушының жазбасы дерекқордан біржола жойылады.</div>
+    <div class="detail-grid">
+        <div class="detail-item"><label>Аты-жөні</label><strong>@Model.FullName</strong></div>
+        <div class="detail-item"><label>Кафедра</label><strong>@Model.Department.Name</strong></div>
+        <div class="detail-item"><label>Электрондық пошта</label><strong>@Model.Email</strong></div>
+        <div class="detail-item"><label>Пәні</label><strong>@Model.Subject</strong></div>
+    </div>
+    <form asp-action="Delete" method="post" class="form-actions"><input type="hidden" asp-for="Id" /><button type="submit" class="btn btn-danger btn-sm">Оқытушыны жою</button><a asp-action="Index" class="btn btn-outline-app">Болдырмау</a></form>
+</section>

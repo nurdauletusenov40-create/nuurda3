@@ -1,0 +1,36 @@
+@model Teacher
+<form asp-action="@ViewData["FormAction"]" asp-route-id="@(Model.Id == 0 ? null : Model.Id)" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+    @if (Model.Id != 0)
+    {
+        <input type="hidden" asp-for="Id" />
+    }
+    <div class="form-grid">
+        <div class="form-field full-width">
+            <label asp-for="FullName" class="form-label"></label>
+            <input asp-for="FullName" class="form-control" placeholder="Мысалы: Айгерім Сәрсенова" />
+            <span asp-validation-for="FullName"></span>
+        </div>
+        <div class="form-field">
+            <label asp-for="Email" class="form-label"></label>
+            <input asp-for="Email" class="form-control" placeholder="name@university.kz" />
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div class="form-field">
+            <label asp-for="DepartmentId" class="form-label"></label>
+            <select asp-for="DepartmentId" class="form-select" asp-items="ViewBag.DepartmentId"><option value="0">Кафедраны таңдаңыз</option></select>
+            <span asp-validation-for="DepartmentId"></span>
+        </div>
+        <div class="form-field">
+            <label asp-for="Subject" class="form-label"></label>
+            <input asp-for="Subject" class="form-control" placeholder="Мысалы: Деректер қоры" />
+            <span asp-validation-for="Subject"></span>
+        </div>
+        <div class="form-field">
+            <label asp-for="ExperienceYears" class="form-label"></label>
+            <input asp-for="ExperienceYears" class="form-control" min="0" max="60" />
+            <span asp-validation-for="ExperienceYears"></span>
+        </div>
+    </div>
+    <div class="form-actions"><button type="submit" class="btn btn-primary-app">Сақтау</button><a asp-action="Index" class="btn btn-outline-app">Болдырмау</a></div>
+</form>

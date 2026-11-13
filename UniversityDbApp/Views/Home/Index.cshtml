@@ -1,0 +1,80 @@
+@model DashboardViewModel
+@{
+    ViewData["Title"] = "Басқару тақтасы";
+    ViewData["Section"] = "БАСҚАРУ ТАҚТАСЫ";
+}
+
+<section class="welcome-banner">
+    <div class="welcome-copy">
+        <span class="eyebrow"><span class="eyebrow-line"></span> УНИВЕРСИТЕТТІ БАСҚАРУ ЖҮЙЕСІ</span>
+        <h1>Қайырлы күн, Нұрдаулет<span class="gold-dot">.</span></h1>
+        <p>Оқу құрылымы мен оқытушылар құрамының бүгінгі көрінісі.</p>
+        <div class="welcome-actions">
+            <a class="btn btn-gold" asp-controller="Teachers" asp-action="Create">＋ Оқытушы қосу</a>
+            <a class="btn btn-ghost-light" asp-controller="Departments" asp-action="Index">Құрылымды көру <span>↗</span></a>
+        </div>
+    </div>
+    <div class="banner-seal" aria-hidden="true"><div class="seal-ring"><span>A</span><small>ABAI · 1928</small></div></div>
+</section>
+
+@if (!Model.DatabaseConnected)
+{
+    <div class="alert alert-warning">Дерекқорға қосылу мүмкін болмады. SQL Server қызметін және appsettings.json ішіндегі қосылым жолын тексеріп, миграцияны орындаңыз.</div>
+}
+
+<section class="stat-grid" aria-label="Негізгі көрсеткіштер">
+    <article class="stat-card"><div class="stat-heading"><span>КАФЕДРАЛАР</span><span class="stat-icon icon-blue">▦</span></div><div class="stat-value">@Model.DepartmentCount.ToString("D2")</div><div class="stat-foot"><span class="stat-marker"></span> Университет құрылымында</div></article>
+    <article class="stat-card"><div class="stat-heading"><span>ОҚЫТУШЫЛАР</span><span class="stat-icon icon-gold">♙</span></div><div class="stat-value">@Model.TeacherCount.ToString("D2")</div><div class="stat-foot"><span class="stat-marker"></span> Белсенді оқытушылар</div></article>
+    <article class="stat-card status-stat"><div class="stat-heading"><span>ДЕРЕКҚОР КҮЙІ</span><span class="status-pulse @(Model.DatabaseConnected ? "is-online" : "is-offline")"></span></div><div class="status-title">@(Model.DatabaseConnected ? "Қосылған" : "Қосылмаған")</div><div class="stat-foot">SQL Server · UniversityDbAppDb</div></article>
+    <article class="stat-card"><div class="stat-heading"><span>ОҚУ ЖЫЛЫ</span><span class="stat-icon icon-ink">⌑</span></div><div class="stat-value year-value">2026<span>—</span>27</div><div class="stat-foot"><span class="stat-marker marker-muted"></span> Күзгі семестр</div></article>
+</section>
+
+<section class="dashboard-grid">
+    <div class="panel department-panel">
+        <div class="panel-heading"><div><span class="eyebrow dark-eyebrow">ҚҰРЫЛЫМ</span><h2>Кафедралар шолуы</h2></div><a class="text-link" asp-controller="Departments" asp-action="Index">Барлығын көру <span>→</span></a></div>
+        @if (Model.Departments.Count == 0)
+        {
+            <div class="empty-state">Кафедралар тізімі әзірге бос.</div>
+        }
+        else
+        {
+            <div class="department-list">
+                @foreach (var department in Model.Departments)
+                {
+                    <a class="department-row" asp-controller="Departments" asp-action="Details" asp-route-id="@department.Id">
+                        <span class="department-symbol">@department.Name[..1]</span>
+                        <span class="department-name"><strong>@department.Name</strong><small>@department.OfficeLocation</small></span>
+                        <span class="teacher-count"><strong>@department.Teachers.Count.ToString("D2")</strong><small>оқытушы</small></span>
+                        <span class="row-arrow">↗</span>
+                    </a>
+                }
+            </div>
+        }
+    </div>
+    <div class="panel quick-panel">
+        <div class="panel-heading"><div><span class="eyebrow dark-eyebrow">ЖЫЛДАМ ӨТУ</span><h2>Қысқа жолдар</h2></div></div>
+        <a class="quick-link" asp-controller="Departments" asp-action="Create"><span class="quick-icon quick-icon-navy">＋</span><span><strong>Кафедра құру</strong><small>Жаңа құрылымдық бөлім қосу</small></span><span class="quick-arrow">↗</span></a>
+        <a class="quick-link" asp-controller="Teachers" asp-action="Create"><span class="quick-icon quick-icon-gold">♙</span><span><strong>Оқытушы тіркеу</strong><small>Маманды кафедраға бекіту</small></span><span class="quick-arrow">↗</span></a>
+        <a class="quick-link" asp-controller="Teachers" asp-action="Index"><span class="quick-icon quick-icon-sage">⌕</span><span><strong>Құрамды іздеу</strong><small>Оқытушылар тізімін сүзгілеу</small></span><span class="quick-arrow">↗</span></a>
+        <div class="database-note"><span class="database-note-icon">i</span><span><strong>Деректер нақты уақытта</strong><small>Ақпарат SQL Server дерекқорынан алынады.</small></span></div>
+    </div>
+</section>
+
+<section class="panel recent-panel">
+    <div class="panel-heading"><div><span class="eyebrow dark-eyebrow">СОҢҒЫ ЖАЗБАЛАР</span><h2>Жақында қосылған оқытушылар</h2></div><a class="text-link" asp-controller="Teachers" asp-action="Index">Тізімді ашу <span>→</span></a></div>
+    @if (Model.RecentTeachers.Count == 0)
+    {
+        <div class="empty-state">Оқытушылар туралы дерек табылмады.</div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table app-table"><thead><tr><th>ОҚЫТУШЫ</th><th>КАФЕДРА</th><th>ПӘНІ</th><th>ЕҢБЕК ӨТІЛІ</th><th></th></tr></thead><tbody>
+            @foreach (var teacher in Model.RecentTeachers)
+            {
+                <tr><td><a class="person-cell" asp-controller="Teachers" asp-action="Details" asp-route-id="@teacher.Id"><span class="person-avatar">@teacher.FullName[..1]</span><span><strong>@teacher.FullName</strong><small>@teacher.Email</small></span></a></td><td>@teacher.Department.Name</td><td>@teacher.Subject</td><td>@teacher.ExperienceYears жыл</td><td><a class="table-action" asp-controller="Teachers" asp-action="Details" asp-route-id="@teacher.Id" aria-label="Мәліметті ашу">↗</a></td></tr>
+            }
+            </tbody></table>
+        </div>
+    }
+</section>

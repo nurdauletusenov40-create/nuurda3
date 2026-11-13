@@ -1,0 +1,41 @@
+@model IEnumerable<Teacher>
+@{
+    ViewData["Title"] = "Оқытушылар";
+    ViewData["Section"] = "ОҚЫТУШЫЛАР";
+}
+<div class="page-heading">
+    <div><span class="eyebrow dark-eyebrow">АДАМ РЕСУРСТАРЫ</span><h1>Оқытушылар құрамы</h1><p>Оқытушыларды іздеу, сүзу және басқару.</p></div>
+    <a class="btn btn-primary-app" asp-action="Create">＋ Оқытушы қосу</a>
+</div>
+<form asp-action="Index" method="get" class="filter-bar">
+    <input type="search" name="search" value="@ViewBag.Search" class="form-control" placeholder="Аты-жөні немесе электрондық пошта..." aria-label="Оқытушыны іздеу" />
+    <select name="departmentId" class="form-select" asp-items="ViewBag.DepartmentId"><option value="">Барлық кафедралар</option></select>
+    <button type="submit" class="btn btn-primary-app">Іздеу</button>
+    @if (ViewBag.Search is not null || ViewBag.DepartmentId is not null)
+    {
+        <a asp-action="Index" class="btn btn-outline-app">Тазарту</a>
+    }
+</form>
+<section class="content-panel">
+    <div class="table-responsive">
+        <table class="table data-table align-middle">
+            <thead><tr><th>ОҚЫТУШЫ</th><th>КАФЕДРА</th><th>ПӘНІ</th><th>ЕҢБЕК ӨТІЛІ</th><th></th></tr></thead>
+            <tbody>
+            @foreach (var teacher in Model)
+            {
+                <tr>
+                    <td><span class="row-title">@teacher.FullName</span><span class="row-subtitle">@teacher.Email</span></td>
+                    <td><span class="badge-soft">@teacher.Department.Name</span></td>
+                    <td>@teacher.Subject</td>
+                    <td>@teacher.ExperienceYears жыл</td>
+                    <td><div class="action-links"><a asp-action="Details" asp-route-id="@teacher.Id">Ашу</a><a asp-action="Edit" asp-route-id="@teacher.Id">Өңдеу</a><a class="danger-link" asp-action="Delete" asp-route-id="@teacher.Id">Жою</a></div></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+        @if (!Model.Any())
+        {
+            <div class="empty-state">Сұрауыңыз бойынша оқытушы табылмады.</div>
+        }
+    </div>
+</section>

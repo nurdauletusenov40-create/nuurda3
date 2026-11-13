@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#101a31" />
+    <title>@ViewData["Title"] · UniversityDbApp</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="app-shell">
+        <aside class="sidebar">
+            <a class="brand" asp-controller="Home" asp-action="Index">
+                <span class="brand-mark">A</span>
+                <span class="brand-copy"><strong>ABAI UNIVERSITY</strong><small>БАСҚАРУ ЖҮЙЕСІ</small></span>
+            </a>
+            <div class="sidebar-caption">БАСТЫ МӘЗІР</div>
+            <nav class="side-nav" aria-label="Негізгі мәзір">
+                <a class="side-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Home" ? "active" : "")" asp-controller="Home" asp-action="Index"><span class="nav-icon">⌂</span>Басқару тақтасы</a>
+                <a class="side-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Departments" ? "active" : "")" asp-controller="Departments" asp-action="Index"><span class="nav-icon">▦</span>Кафедралар</a>
+                <a class="side-link @(ViewContext.RouteData.Values["controller"]?.ToString() == "Teachers" ? "active" : "")" asp-controller="Teachers" asp-action="Index"><span class="nav-icon">♙</span>Оқытушылар</a>
+            </nav>
+            <div class="sidebar-bottom">
+                <div class="semester-card"><span class="semester-dot"></span><div><strong>2026–2027</strong><small>Оқу жылы</small></div></div>
+                <div class="sidebar-student"><div class="student-avatar">НҮ</div><div><strong>Нұрдаулет Үсенов</strong><small>ИСК-242 · 3 курс</small></div></div>
+            </div>
+        </aside>
+        <main class="main-area">
+            <header class="topbar">
+                <div class="breadcrumb-label">АБАЙ УНИВЕРСИТЕТІ <span>/</span> @(ViewData["Section"] ?? "БАСҚАРУ")</div>
+                <div class="topbar-right"><span class="topbar-date">@DateTime.Now.ToString("dd MMMM yyyy", new System.Globalization.CultureInfo("kk-KZ"))</span><span class="user-chip">НҮ</span></div>
+            </header>
+            <div class="page-content">
+                @if (TempData["Success"] is string success)
+                {
+                    <div class="alert alert-success app-alert" role="status">@success</div>
+                }
+                @RenderBody()
+            </div>
+            <footer class="app-footer"><span>© 2026 Абай атындағы Қазақ ұлттық педагогикалық университеті</span><span>Университетті басқару жүйесі</span></footer>
+        </main>
+    </div>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/dist/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

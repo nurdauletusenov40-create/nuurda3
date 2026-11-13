@@ -1,0 +1,26 @@
+@model Department
+<form asp-action="@ViewData["FormAction"]" asp-route-id="@Model.Id" method="post">
+    <div asp-validation-summary="ModelOnly"></div>
+    @if (Model.Id != 0)
+    {
+        <input type="hidden" asp-for="Id" />
+    }
+    <div class="form-grid">
+        <div class="form-field full-width">
+            <label asp-for="Name" class="form-label"></label>
+            <input asp-for="Name" class="form-control" placeholder="Мысалы: Математика және информатика" />
+            <span asp-validation-for="Name"></span>
+        </div>
+        <div class="form-field full-width">
+            <label asp-for="Description" class="form-label"></label>
+            <textarea asp-for="Description" class="form-control" placeholder="Кафедраның қызмет бағытын қысқаша сипаттаңыз"></textarea>
+            <span asp-validation-for="Description"></span>
+        </div>
+        <div class="form-field">
+            <label asp-for="OfficeLocation" class="form-label"></label>
+            <input asp-for="OfficeLocation" class="form-control" placeholder="Мысалы: Бас корпус, 312-кабинет" />
+            <span asp-validation-for="OfficeLocation"></span>
+        </div>
+    </div>
+    <div class="form-actions"><button type="submit" class="btn btn-primary-app">Сақтау</button><a asp-action="Index" class="btn btn-outline-app">Болдырмау</a></div>
+</form>

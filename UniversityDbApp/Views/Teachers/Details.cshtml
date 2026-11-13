@@ -1,0 +1,16 @@
+@model Teacher
+@{
+    ViewData["Title"] = "Оқытушы мәліметі";
+    ViewData["Section"] = "ОҚЫТУШЫЛАР";
+}
+<div class="page-heading"><div><span class="eyebrow dark-eyebrow">ОҚЫТУШЫ ПРОФИЛІ</span><h1>@Model.FullName</h1><p>@Model.Department.Name</p></div><div class="heading-actions"><a class="btn btn-outline-app" asp-action="Index">← Тізімге қайту</a><a class="btn btn-primary-app" asp-action="Edit" asp-route-id="@Model.Id">Өңдеу</a></div></div>
+<section class="content-panel form-panel">
+    <div class="detail-grid">
+        <div class="detail-item"><label>Аты-жөні</label><strong>@Model.FullName</strong></div>
+        <div class="detail-item"><label>Кафедра</label><strong>@Model.Department.Name</strong></div>
+        <div class="detail-item"><label>Электрондық пошта</label><strong>@Model.Email</strong></div>
+        <div class="detail-item"><label>Оқытатын пәні</label><strong>@Model.Subject</strong></div>
+        <div class="detail-item"><label>Еңбек өтілі</label><strong>@Model.ExperienceYears жыл</strong></div>
+        <div class="detail-item"><label>Жазба нөмірі</label><strong>#@Model.Id</strong></div>
+    </div>
+</section>

@@ -1,0 +1,8 @@
+@model Teacher
+@{
+    ViewData["Title"] = "Оқытушы қосу";
+    ViewData["Section"] = "ОҚЫТУШЫЛАР";
+    ViewData["FormAction"] = "Create";
+}
+<div class="page-heading"><div><span class="eyebrow dark-eyebrow">ЖАҢА ЖАЗБА</span><h1>Оқытушыны тіркеу</h1><p>Маман туралы ақпаратты енгізіп, кафедрасын таңдаңыз.</p></div></div>
+<section class="content-panel form-panel"><partial name="_Form" model="Model" /></section>

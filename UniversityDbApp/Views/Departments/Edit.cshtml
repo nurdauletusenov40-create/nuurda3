@@ -1,0 +1,8 @@
+@model Department
+@{
+    ViewData["Title"] = "Кафедраны өңдеу";
+    ViewData["Section"] = "КАФЕДРАЛАР";
+    ViewData["FormAction"] = "Edit";
+}
+<div class="page-heading"><div><span class="eyebrow dark-eyebrow">МӘЛІМЕТТЕРДІ ЖАҢАРТУ</span><h1>Кафедраны өңдеу</h1><p>@Model.Name</p></div></div>
+<section class="content-panel form-panel"><partial name="_Form" model="Model" /></section>
